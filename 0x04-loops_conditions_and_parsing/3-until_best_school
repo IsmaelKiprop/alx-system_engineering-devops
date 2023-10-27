@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Print the word 'Best School' 10 times with `until` loop
+
+i=0
+until [ $i == 10 ]
+do
+    echo "Best School"
+    i=$((i+1))
+done

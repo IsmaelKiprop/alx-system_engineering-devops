@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#read and cut
+
+while read -r line;
+do
+    echo "$line" | cut -d ":" -f 1,3,6
+done < /etc/passwd
