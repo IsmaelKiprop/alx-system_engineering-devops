@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Display info about all ongoing processses in a process tree
+
+ps auxf

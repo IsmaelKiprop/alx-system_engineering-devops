@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Displays "To infinity and beyond" indefinitely but sleeps for every 2s but traps SIGTERM
+
+while :
+do
+    echo "To infinity and beyond"
+    sleep 2
+    trap "echo I am invincible!!!" TERM
+done
