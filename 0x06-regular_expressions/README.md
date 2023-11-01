@@ -1,1 +1,1 @@
-### Solutions to:0x06. Regular expression.
+### Solutio to : 0x06-regular_expressions
