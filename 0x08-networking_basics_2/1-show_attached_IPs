@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Show all IPV4 address on computer
+
+ifconfig | grep "inet " | cut -d " " -f 10

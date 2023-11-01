@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#Resolve hostname to different IP
+
+cp /etc/hosts ~/hosts
+
+#Change localhost to 127.0.0.2
+sed -i '1s/^127.*/127.0.0.2       localhost/'  ~/hosts
+
+#Add facebook to resolve to 8.8.8.8(google IP)
+echo "8.8.8.8   facebook.com" >>  ~/hosts
+
+cp -f  ~/hosts /etc/hosts
