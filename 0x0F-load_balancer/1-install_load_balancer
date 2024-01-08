@@ -13,7 +13,7 @@ frontend Innocent.Sax
 
 backend web_servers
         balance roundrobin
-        server 64820-web-01 100.26.213.137
+        server 64820-web-01 54.146.70.179
         server 64820-web-02 18.209.180.111
 ' >> /etc/haproxy/haproxy.cfg
 
