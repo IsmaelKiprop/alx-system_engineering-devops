@@ -1,0 +1,17 @@
+
+defaults
+  mode http
+  timeout client 15s
+  timeout connect 10s
+  timeout server 15s
+  timeout http-request 10s
+
+frontend ismaelkiprop.tech
+    bind *:80
+    default_backend ismaelkiprop.tech
+
+backend ismaelkiprop.tech
+    balance roundrobin
+    server 453992-web-01 54.146.70.179 check
+    server 453992-web-02 18.209.180.111 check	
+

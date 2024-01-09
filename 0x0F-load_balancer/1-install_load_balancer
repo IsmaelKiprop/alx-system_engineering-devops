@@ -1,32 +1,15 @@
 #!/usr/bin/env bash
-# install load balancer
+# Install and configure HAProxy on Ubuntu
 
+# Update and install HAProxy
+sudo apt-get update -y
+sudo apt-get install -y haproxy
 
-echo -e "Updating and doing some minor checks...\n"
+# Backup default HAProxy config
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
 
-function install() {
-	command -v "$1" &> /dev/null
-
-	#shellcheck disable=SC2181
-	if [ $? -ne 0 ]; then
-		echo -e "	Installing: $1\n"
-		sudo apt-get update -y -qq && \
-			sudo apt-get install -y "$1" -qq
-		echo -e "\n"
-	else
-		echo -e "	${1} is already installed.\n"
-	fi
-}
-
-install haproxy #install haproxy
-
-echo -e "\nSetting up some minor stuff.\n"
-
-# backup default server config file
-sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
-
-server_config=\
-"
+# Set up HAProxy configuration
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null << 'EOF'
 defaults
   mode http
   timeout client 15s
@@ -40,18 +23,13 @@ frontend ismaelkiprop.tech
 
 backend ismaelkiprop.tech
     balance roundrobin
-    server 453992-web-01 54.146.70.179 check
-    server 453992-web-02 18.209.180.111 check	
-"
+    server 453992-web-01 54.146.70.179:80 check
+    server 453992-web-02 18.209.180.111:80 check
+EOF
 
-# shellcheck disable=SC2154
-echo "$server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
+# Enable HAProxy to be managed by init script
+echo "ENABLED=1" | sudo tee /etc/default/haproxy > /dev/null
 
-# enable haproxy to be started by init script
-echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
+# Restart HAProxy service
+sudo service haproxy restart
 
-if [ "$(pgrep -c haproxy)" -le 0 ]; then
-	sudo service haproxy start
-else
-	sudo service haproxy restart
-fi
