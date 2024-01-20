@@ -1,3 +1,5 @@
+<img width="451" alt="image" src="https://github.com/IsmaelKiprop/alx-system_engineering-devops/assets/133222922/f11aeff0-b828-49cd-a6e2-34388f1c4f75">
+
 # 0x11 - What Happens When You Type https://www.google.com in Your Browser and Press Enter
 
 ## Overview
