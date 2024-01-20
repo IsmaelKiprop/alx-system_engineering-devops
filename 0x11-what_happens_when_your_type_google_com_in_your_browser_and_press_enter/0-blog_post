@@ -1,0 +1,39 @@
+# What Happens When You Type https://www.google.com in Your Browser and Press Enter
+
+Being a Full-Stack Software Engineer involves understanding the intricate details of how a web request is processed. In this post, we'll unravel the layers of the web stack, focusing on what happens when you type `https://www.google.com` in your browser and press Enter.
+
+## DNS Request
+
+The journey begins with a Domain Name System (DNS) request. When you enter the URL, your browser needs to find the IP address associated with the domain name. It contacts a DNS server, which translates the human-readable domain name into a machine-readable IP address.
+
+## TCP/IP
+
+With the IP address obtained, the browser establishes a connection using the Transmission Control Protocol (TCP) over the Internet Protocol (IP). This ensures a reliable and ordered communication channel between your computer and the server hosting Google's website.
+
+## Firewall
+
+The request passes through a firewall, a crucial security component that monitors and controls incoming and outgoing network traffic. The firewall ensures that only legitimate and authorized traffic is allowed, providing a barrier against potential threats.
+
+## HTTPS/SSL
+
+Security is paramount in web communication. The browser initiates a secure connection using the Hypertext Transfer Protocol Secure (HTTPS) along with the Secure Sockets Layer (SSL) or Transport Layer Security (TLS) protocols. This encryption ensures that the data exchanged between your browser and the server is secure, protecting it from eavesdropping and tampering.
+
+## Load-Balancer
+
+To distribute incoming web traffic across multiple servers and prevent any single server from becoming overwhelmed, a load balancer is employed. It optimizes the performance and reliability of the website by directing the request to one of Google's many web servers.
+
+## Web Server
+
+The load balancer directs the request to a web server, which handles static content. This includes serving HTML, CSS, and other assets required to render the webpage in your browser.
+
+## Application Server
+
+For dynamic content and complex processing, the request may pass to an application server. This server executes server-side code and generates dynamic elements, enhancing the interactivity and functionality of the webpage.
+
+## Database
+
+In cases where the webpage requires data from a database, the application server communicates with the database server. This interaction involves querying the database to retrieve information such as user data, search results, or any other dynamic content displayed on the webpage.
+
+## Conclusion
+
+In conclusion, the process of loading a webpage involves a sequence of steps, each crucial to delivering a seamless user experience. From DNS resolution to database queries, understanding this intricate flow provides valuable insights into the infrastructure side of web development.
