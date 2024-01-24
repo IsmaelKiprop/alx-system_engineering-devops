@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-
-# Edit Nginx configuration
-sed -i 's/user\s*root;/user nginx;/g' /etc/nginx/nginx.conf
-
-# Restart Nginx
+# This script quickly configures Nginx to run as the nginx user and restarts the service
+sed -i 's/user\s*=\s*root/user nginx/' /etc/nginx/nginx.conf
 service nginx restart
-
-# Verify Nginx is running as nginx user
-ps auxff | grep ngin[x]
-
-# Verify Nginx is listening on port 8080
-nc -z 0 8080
