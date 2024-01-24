@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Bash Script that uses ssh to connect to your server using private key
+#ket ~/.ssh/school with the user ubuntu
+ssh ubuntu@100.26.213.137 -i ~/.ssh/id_rsa
