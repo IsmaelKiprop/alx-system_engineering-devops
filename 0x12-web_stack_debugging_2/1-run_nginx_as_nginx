@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Edit Nginx configuration
 sed -i 's/user\s*root;/user nginx;/g' /etc/nginx/nginx.conf
