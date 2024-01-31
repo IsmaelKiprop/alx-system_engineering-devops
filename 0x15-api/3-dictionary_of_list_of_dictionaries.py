@@ -1,18 +1,44 @@
 #!/usr/bin/python3
-"""Exports to-do list information of all employees to JSON format."""
+"""
+Export data in JSON format for all tasks from all employees
+"""
+
 import json
 import requests
+from sys import argv
 
 if __name__ == "__main__":
-    url = "https://jsonplaceholder.typicode.com/"
-    users = requests.get(url + "users").json()
+    # API base URL
+    base_url = "https://jsonplaceholder.typicode.com/"
 
-    with open("todo_all_employees.json", "w") as jsonfile:
-        json.dump({
-            u.get("id"): [{
-                "task": t.get("title"),
-                "completed": t.get("completed"),
-                "username": u.get("username")
-            } for t in requests.get(url + "todos",
-                                    params={"userId": u.get("id")}).json()]
-            for u in users}, jsonfile)
+    # Fetch users
+    users_url = base_url + "users"
+    users_response = requests.get(users_url)
+    users = users_response.json()
+
+    # Fetch tasks
+    tasks_url = base_url + "todos"
+    tasks_response = requests.get(tasks_url)
+    tasks = tasks_response.json()
+
+    # Dictionary to store tasks for each user
+    tasks_dict = {}
+
+    for user in users:
+        user_id = str(user.get("id"))
+        username = user.get("username")
+
+        # Filter tasks for the current user
+        user_tasks = [
+            {"username": username, "task": task["title"], "completed": task["completed"]}
+            for task in tasks
+            if task["userId"] == user["id"]
+        ]
+
+        # Store user tasks in the dictionary
+        tasks_dict[user_id] = user_tasks
+
+    # Export to JSON file
+    json_filename = "todo_all_employees.json"
+    with open(json_filename, "w") as json_file:
+        json.dump(tasks_dict, json_file)
