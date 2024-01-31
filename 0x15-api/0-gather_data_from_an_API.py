@@ -1,31 +1,49 @@
 #!/usr/bin/python3
-"""Accessing a REST API for todo lists of employees"""
+"""
+Script to gather data from an API for a given employee ID
+"""
 
 import requests
 import sys
 
+def get_employee_todo_list(employee_id):
+    """
+    Retrieves and prints employee TODO list progress from the API.
+    """
+    base_url = "https://jsonplaceholder.typicode.com"
+    user_url = f"{base_url}/users/{employee_id}"
+    todos_url = f"{base_url}/todos?userId={employee_id}"
 
-if __name__ == '__main__':
-    employeeId = sys.argv[1]
-    baseUrl = "https://jsonplaceholder.typicode.com/users"
-    url = baseUrl + "/" + employeeId
+    try:
+        user_response = requests.get(user_url)
+        todos_response = requests.get(todos_url)
 
-    response = requests.get(url)
-    employeeName = response.json().get('name')
+        user_data = user_response.json()
+        todos_data = todos_response.json()
 
-    todoUrl = url + "/todos"
-    response = requests.get(todoUrl)
-    tasks = response.json()
-    done = 0
-    done_tasks = []
+        # Filter completed tasks
+        completed_tasks = [task for task in todos_data if task['completed']]
 
-    for task in tasks:
-        if task.get('completed'):
-            done_tasks.append(task)
-            done += 1
+        # Display information
+        print(f"Employee {user_data['name']} is done with tasks({len(completed_tasks)}/{len(todos_data)}):")
+        for task in completed_tasks:
+            print(f"\t {task['title']}")
 
-    print("Employee {} is done with tasks({}/{}):"
-          .format(employeeName, done, len(tasks)))
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        sys.exit(1)
 
-    for task in done_tasks:
-        print("\t {}".format(task.get('title')))
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = sys.argv[1]
+
+    try:
+        employee_id = int(employee_id)
+    except ValueError:
+        print("Error: Employee ID must be an integer")
+        sys.exit(1)
+
+    get_employee_todo_list(employee_id)
